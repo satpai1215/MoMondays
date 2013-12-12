@@ -6,19 +6,18 @@ module EventsHelper
 	def display_edit_event(event)
 		html = ""
 		if(event.stage != "Archived")
-			if(event.stage != nil)
-				html << link_to('Edit', edit_event_path(event), :class => 'edit-event', :remote => true)
-			end
+			content_tag :span do
+				link_to('Edit', edit_event_path(event), :class => 'edit-event', :remote => true)
+			end.html_safe
     	end
-    	return html.html_safe
 	end
 
 	def display_delete_event(event, from_index = false)
-		html = ""
 		if(event.stage == "Voting")
-	        html << link_to('Delete', event_path(event, from_index: from_index), method: :delete, data:{ confirm: 'Are you sure?' }, :class => 'delete-event', :remote => true)
+			content_tag :span do 
+				link_to('Delete', event_path(event, from_index: from_index), method: :delete, data:{ confirm: 'Are you sure?' }, :class => 'delete-event', :remote => true)
+			end.html_safe
 		end
-    	return html.html_safe
 	end
 
 	def display_invite_guests(event)
