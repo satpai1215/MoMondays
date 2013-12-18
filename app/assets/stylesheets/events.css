@@ -36,6 +36,10 @@
 	margin: 0px;
 }
 
+	a.event-list-item-link {
+		color: inherit;
+		text-decoration: none;
+	}
 
 .eventList .eventItem {
 	margin-left: 0px;

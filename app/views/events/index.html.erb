@@ -38,24 +38,24 @@
                         </div>
                     <% else %>
                         <% @upcoming_events.each_with_index do |event, index| %>
-                                <li>
-                                    <div class = "row eventItem">
-                                        <div class = "span6 eventLabel" >
-                                            <!--<span id = "eventName"><%#= link_to event.name, event_path(event) %> </span> -->
-                                            <div class = "eventName"><%= h(event.name) %></div>
-                                            <%= event.event_start.strftime("%B %d, %Y") %> at 
-                                                <%= event.event_start.strftime("%I:%M%p") %>
-                                            <br/> Created By: <%= h(event.owner) %>
-                                        </div>
-                                        <div class = "span2 eventActions">
-                                            <div class = "eventClock">
-                                                <p>Event Starts In:</p>
-                                                <%= tag(:span, id: "eventIndexTimer" + index.to_s, class: "eventIndexTimer", data: {date: (event.event_start).to_s})%><%= timeLeft_days(event) %></span>
-                                             <div class = "eventActionLink"><%=action_links(event)%></div>
-                                            </div>
+                            <li>
+                                <div class = "row eventItem">
+                                    <div class = "span6 eventLabel" >
+                                        <!--<span id = "eventName"><%#= link_to event.name, event_path(event) %> </span> -->
+                                        <div class = "eventName"><%= h(event.name) %></div>
+                                        <%= event.event_start.strftime("%B %d, %Y") %> at 
+                                            <%= event.event_start.strftime("%I:%M%p") %>
+                                        <br/> Created By: <%= h(event.owner) %>
+                                    </div>
+                                    <div class = "span2 eventActions">
+                                        <div class = "eventClock">
+                                            <p>Event Starts In:</p>
+                                            <%= tag(:span, id: "eventIndexTimer" + index.to_s, class: "eventIndexTimer", data: {date: (event.event_start).to_s})%><%= timeLeft_days(event) %></span>
+                                         <div class = "eventActionLink"><%=action_links(event)%></div>
                                         </div>
                                     </div>
-                                </li>
+                                </div>
+                            </li>
                         <% end %>
                     <% end %>
        
