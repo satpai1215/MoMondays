@@ -65,33 +65,43 @@ class VenuesController < ApplicationController
   def create
     @venue = Venue.new(params[:venue])
     @venue.address = @venue.address.gsub("\n", "<br>").html_safe
+    @event = @venue.event
 
-    if(@venue.event != nil)
+    if(@event != nil)
       @venue.user = current_user
       #@venue.votecount = 1
 
       respond_to do |format|
         if @venue.save
           #automatically votes for suggested venue if not already voted for this event
-          if !Voter.exists?(:user_id => current_user.id, :event_id => @venue.event.id)
-            Voter.create!(:user_id => current_user.id, :event_id => @venue.event.id, :venue_id => @venue.id)
+          if !Voter.exists?(:user_id => current_user.id, :event_id => @event.id)
+            Voter.create!(:user_id => current_user.id, :event_id => @event.id, :venue_id => @venue.id)
             @venue.update_column(:votecount, 1)
           end
 
           @content = "#{current_user} just suggested a venue"
-          @update = Update.create!(:content => "#{current_user} just suggested a venue for \"#{@venue.event}\"", :event_id => @venue.event.id)
-          @comment = Comment.create!(:content => @content, :event_id => @venue.event.id)
+          @update = Update.create!(:content => "#{current_user} just suggested a venue for \"#{@venue.event}\"", :event_id => @event.id)
+          @comment = Comment.create!(:content => @content, :event_id => @event.id)
 
-          if(@venue.event.owner_id != current_user.id)
-            AutoMailer.venue_suggested_email_owner(@venue.event.id, @venue.user.id).deliver
+          if(@event.owner_id != current_user.id)
+            AutoMailer.venue_suggested_email_owner(@event.id, @venue.user.id).deliver
           end
-            AutoMailer.venue_suggested_email_guest(@venue.event.id, @venue.user.id).deliver
+      
+          #prevents multiple emails for event creation and venue suggestion by owner if they happen within a few hours
+          if(@venue.user.id == @event.owner_id)
+            time_diff = (@venue.created_at - @event.created_at)/(3600) #in hours
+            if(time_diff > 4)
+              AutoMailer.venue_suggested_email_guest(@event.id, @venue.user.id).deliver
+            end
+          else
+            AutoMailer.venue_suggested_email_guest(@event.id, @venue.user.id).deliver
+          end
           
-          format.html { redirect_to @venue.event, notice: 'Venue added successfully.' }
-          format.json { render json: @venue.event, status: :created, location: @venue.event }
+          format.html { redirect_to @event, notice: 'Venue added successfully.' }
+          format.json { render json: @event, status: :created, location: @event }
           format.js
         else
-          @event_id = @venue.event.id
+          @event_id = @event.id
           format.html { render action: "new"}
           format.json { render json: @venue.errors, status: :unprocessable_entity }
           format.js {render action: "new"}
