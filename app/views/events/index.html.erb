@@ -50,7 +50,9 @@
                                     <div class = "span2 eventActions">
                                         <div class = "eventClock">
                                             <p>Event Starts In:</p>
-                                            <%= tag(:span, id: "eventIndexTimer" + index.to_s, class: "eventIndexTimer", data: {date: (event.event_start).to_s})%><%= timeLeft_days(event) %></span>
+                                            <%= content_tag(:span, {:id => "eventIndexTimer" + index.to_s, :class => "eventIndexTimer", :data => {date: (event.event_start).to_s}}) do %>
+                                                <%= timeLeft_days(event) %>
+                                             <% end %>
                                          <div class = "eventActionLink"><%=action_links(event)%></div>
                                         </div>
                                     </div>
@@ -91,8 +93,9 @@
                                     <div class = "span2 eventActions">
                                         <div class = "eventClock">
                                             <p>Voting Ends In:</p>
-                                            <%= tag(:span, id: "eventIndexTimer" + (index + @upcoming_events.count).to_s, class: "eventIndexTimer", data: {date: (event.event_start-event.vote_end.hours).to_s})%><%= timeLeft_days(event) %>
-                                            </span>
+                                            <%= content_tag(:span, {:id => "eventIndexTimer" + (index + @upcoming_events.count).to_s, :class => "eventIndexTimer", :data => {date: (event.event_start-event.vote_end.hours).to_s}}) do %>
+                                                <%= timeLeft_days(event) %>
+                                            <% end %>
                                              <div class = "eventActionLink"><%=action_links(event)%></div>
                                         </div>
                                     </div>

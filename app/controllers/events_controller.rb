@@ -210,7 +210,7 @@ class EventsController < ApplicationController
 
   #rsvp_yes
   def rsvp_yes
-    @guest = Guest.find(params[:guest_id])
+    @guest = Guest.includes(:event).find(params[:guest_id])
     @event = @guest.event
 
       if (!@guest)

@@ -67,8 +67,7 @@ module EventsHelper
 		html = ""
 		link_text = (event.stage == "Voting" ? "Go to Event Page!": "See Event Info")
 		btn_type = (event.stage == "Voting" ? "btn-primary event-voting-btn": "btn-primary event-voting-btn")
-		html << link_to(link_text, event_path(event), {:class => "btn #{btn_type}"})
-		return html.html_safe
+		return link_to(link_text, event_path(event), {:class => "btn #{btn_type}"}).html_safe
 	end
 
 	

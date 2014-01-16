@@ -20,13 +20,13 @@ MoMondays::Application.routes.draw do
   
   match '/venue/increment_vote', :controller => 'venues', :action => 'increment_vote'
   match '/event/send_reminder', :controller => 'events', :action => 'send_reminder'
-  match '/event/post_comment', :controller => 'events', :action => 'post_comment'
-  match 'rsvp_yes', :controller => 'events', :action => 'rsvp_yes'
-  match 'rsvp_no', :controller => 'events', :action => 'rsvp_no'
+  post '/event/post_comment', :controller => 'events', :action => 'post_comment'
+  get 'rsvp_yes', :controller => 'events', :action => 'rsvp_yes'
+  get 'rsvp_no', :controller => 'events', :action => 'rsvp_no'
  # match '/events/new', :controller => 'events', :action => 'new'
 
   match '/event/invite_guests', :controller => 'guests', :action => 'new'
-  match '/guests/update_guestlist' => 'guests#update_guestlist'
+  post '/guests/update_guestlist' => 'guests#update_guestlist'
   match '/guests/leave_event/' => 'guests#leave_event'
 
 
