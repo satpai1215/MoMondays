@@ -36,8 +36,8 @@ MoMondays::Application.configure do
   :address              => "smtpout.secureserver.net",
   :port                 => 80,
   :domain               => 'mo-mondays.com',
-  :user_name            => 'info@mo-mondays.com',
-  :password             => 'moproblems',
+  :user_name            => '********',
+  :password             => '********',
   :authentication       => 'plain',
   :enable_starttls_auto => true  }
 
